@@ -1,6 +1,8 @@
 package com.dol.jetpackanimations.pong
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import kotlin.math.max
 import kotlin.math.min
@@ -40,7 +43,22 @@ fun PongGameScreen() {
         }
     }
 
-    Canvas(modifier = Modifier.fillMaxSize()) {
+    Canvas(modifier = Modifier
+        .fillMaxSize()
+        .pointerInput(key1 = "nitin") {
+            detectDragGestures(
+                onDragStart = {
+                    Log.d("TAG", "PongGameScreen: onDragStart - $it")
+
+                }, onDrag = { change, dragAmount ->
+                    Log.d("TAG", "PongGameScreen: onDrag - $change, $dragAmount")
+
+                }, onDragEnd = {
+                    Log.d("TAG", "PongGameScreen: onDragEnd")
+                }
+            )
+        }
+    ) {
 
         val racketWidth = racketWidthDp * density
         val racketHeight = racketHeightDp * density
